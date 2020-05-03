@@ -17,12 +17,12 @@ from utils import visualization_utils as vis_util
 import re
 
 
-MODEL_NAME = 'weightSignMEM640'
-PATH_TO_CKPT = MODEL_NAME + '/sign.pb'
-PATH_TO_LABELS = os.path.join('weightSignMEM640', 'sign.pbtxt')
+MODEL_NAME = 'gun'
+PATH_TO_CKPT = MODEL_NAME + '/gun.pb'
+PATH_TO_LABELS = os.path.join('gun', 'gun.pbtxt')
 NUM_CLASSES = 1
 
-savingFolder = "./weightSignMEM640/outSTiff/10158244"
+savingFolder = "./gun/outSTiff/10158244"
 businessThreshold = 80
 
 detection_graph = tf.Graph()
@@ -43,7 +43,7 @@ def load_image_into_numpy_array(image):
 
 with detection_graph.as_default():
     with tf.compat.v1.Session(graph=detection_graph) as sess:
-        image = cv2.imread("./weightSignMEM640/inputD/25.jpg")
+        image = cv2.imread("./gun/inputD/25.jpg")
         (height, width) = image.shape[:2]
         image_np_expanded = np.expand_dims(image, axis=0)
         image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')

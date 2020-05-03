@@ -15,9 +15,9 @@ import glob
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
-MODEL_NAME = 'weightSignMEM640'
-PATH_TO_CKPT = MODEL_NAME + '/sign.pb'
-PATH_TO_LABELS = os.path.join('weightSignMEM640', 'sign.pbtxt')
+MODEL_NAME = 'gun'
+PATH_TO_CKPT = MODEL_NAME + '/gun.pb'
+PATH_TO_LABELS = os.path.join('gun', 'gun.pbtxt')
 NUM_CLASSES = 1
 
 detection_graph = tf.Graph()
@@ -38,7 +38,7 @@ def load_image_into_numpy_array(image):
 
 with detection_graph.as_default():
     with tf.compat.v1.Session(graph=detection_graph) as sess:
-        image = cv2.imread("./weightSignMEM640/outSTiff/10158244_2/s-2.tif")
+        image = cv2.imread("./gun/outSTiff/10158244_2/s-2.tif")
         (height, width) = image.shape[:2]
         image_np_expanded = np.expand_dims(image, axis=0)
         image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
@@ -69,7 +69,7 @@ with detection_graph.as_default():
                 objects.append(object_dict)
                 
                 roi = image[ymin:ymax , xmin:xmax].copy()
-                detectLabels = "./weightSignMEM640/sigDataSet/"
+                detectLabels = "./gun/sigDataSet/"
                 
                 if not os.path.exists(os.path.dirname(detectLabels)):
                     os.mkdir(os.path.dirname(detectLabels))
