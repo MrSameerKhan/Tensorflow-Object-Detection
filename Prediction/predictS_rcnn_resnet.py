@@ -9,6 +9,8 @@ config = ConfigProto()
 config.gpu_options.allow_growth = True
 session = InteractiveSession(config=config)
 
+
+
 import numpy as np
 import cv2
 import glob
