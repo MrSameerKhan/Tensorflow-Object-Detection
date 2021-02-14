@@ -15,10 +15,10 @@ import glob
 from utils import label_map_util
 from utils import visualization_utils as vis_util
 
-MODEL_NAME = 'gun'
-PATH_TO_CKPT = MODEL_NAME + '/gun.pb'
-PATH_TO_LABELS = os.path.join('gun', 'gun.pbtxt')
-NUM_CLASSES = 1
+MODEL_NAME = 'realObject'
+PATH_TO_CKPT = MODEL_NAME + '/live.pb'
+PATH_TO_LABELS = os.path.join('realObject', 'live.pbtxt')
+NUM_CLASSES = 90
 
 detection_graph = tf.Graph()
 with detection_graph.as_default():
@@ -38,7 +38,7 @@ def load_image_into_numpy_array(image):
 
 with detection_graph.as_default():
     with tf.compat.v1.Session(graph=detection_graph) as sess:
-        image = cv2.imread("./gun/outSTiff/10158244_2/s-2.tif")
+        image = cv2.imread("realObject/input.jpeg")
         (height, width) = image.shape[:2]
         image_np_expanded = np.expand_dims(image, axis=0)
         image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
@@ -69,20 +69,14 @@ with detection_graph.as_default():
                 objects.append(object_dict)
                 
                 roi = image[ymin:ymax , xmin:xmax].copy()
-                detectLabels = "./gun/sigDataSet/"
-                
+                detectLabels = "./output/"
                 if not os.path.exists(os.path.dirname(detectLabels)):
                     os.mkdir(os.path.dirname(detectLabels))
-                
                 cv2.imwrite(detectLabels+((category_index.get(value)).get("name"))+".jpg".format(str(index)), roi)
-                
-                
-        
-       
                 
         vis_util.visualize_boxes_and_labels_on_image_array(image, np.squeeze(boxes),np.squeeze(classes).astype(np.int32),np.squeeze(scores),category_index,use_normalized_coordinates=True,line_thickness=8)
 
-        cv2.imshow("Al Rajhi : KYC Document", cv2.resize(image, (1000,1000)))
+        cv2.imshow("Detection", image)
         cv2.waitKey(0)
   
         
